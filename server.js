@@ -1,0 +1,1 @@
+require('./nodecellar/app.js');

@@ -1,0 +1,122 @@
+<div class="">
+
+  <h1 ng-show={{clienteDetalle.titleIsVisible}}>
+    {{clienteDetalle.sectionTitle}}
+    <small><a href="clientes" class="btn btn-primary">Todos</a></small>
+  </h1>
+
+  <table class="table">
+    <tr>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon">Cliente</span>
+          <input type="text" class="form-control" ng-model="cliente.clientName">
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div class="input-group">
+          <span class="input-group-addon">Dirección</span>
+          <input type="text" class="form-control" ng-model="cliente.clientAdress">
+        </div>
+      </td>
+      <td colspan="2">
+        <div class="input-group">
+          <span class="input-group-addon">Teléfono</span>
+          <input type="text" class="form-control" ng-model="cliente.clientTelephone">
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <div class="input-group">
+          <span class="input-group-addon">Notas</span>
+          <textarea class="form-control" ng-model="cliente.clientNotes"></textarea>
+        </div>
+      </td>
+      <td>
+        <div ng-class="{alert: true, 'alert-danger': cliente.clientBalance < 0, 'alert-success': cliente.clientBalance >= 0}">
+          Saldo: {{cliente.clientBalance | currency:'$'}}
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <button type="button" class="btn btn-secondary" ng-click="actualizarCliente()">Guardar cambios</button>
+      </td>
+    </tr>
+  </table>
+
+  <div class="panel">
+    <div class="panel-heading">
+      <div class="btn-group" role="group" >
+          <button type="button" ng-class="{'btn btn-default': true, active: clientDetailShowing == 'pagos'}" ng-click="changeClientDetail('pagos')">Pagos</button>
+          <button type="button" ng-class="{'btn btn-default': true, active: clientDetailShowing == 'presupuestos'}" ng-click="changeClientDetail('presupuestos')">Presupuestos</button>
+          <button type="button" ng-class="{'btn btn-default': true, active: clientDetailShowing == 'agregarPago'}" ng-click="changeClientDetail('agregarPago')">Agregar pago</button>
+      </div>
+    </div>
+    <div class="panel-body" ng-show="clientDetailShowing == 'pagos'">
+      <span ng-show="cliente.clientPayments.length == 0">No se registraron pagos</span>
+      <table class="table table-bordered" ng-hide="cliente.clientPayments.length == 0">
+        <tr>
+          <th>Fecha</th>
+          <th>Monto</th>
+          <th>Método</th>
+          <th>Notas</th>
+        </tr>
+        <tr ng-repeat="payment in cliente.clientPayments track by $index">
+          <td>{{payment.paymentDate | date:"dd/MM/yyyy"}}</td>
+          <td>{{payment.paymentMount | currency:"$"}}</td>
+          <td>{{payment.paymentMethod}}</td>
+          <td>{{payment.paymentNotes}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="panel-body" ng-show="clientDetailShowing == 'presupuestos'">
+      <span ng-show="cliente.clientBudgets.length == 0">No se registraron presupuestos</span>
+      <table class="table table-bordered" ng-hide="cliente.clientBudgets.length == 0">
+        <tr ng-repeat="budget in cliente.clientBudgets track by $index">
+          <td>{{budget.budgetDate | date:"dd/MM/yyyy"}}</td>
+          <td>{{budget.budgetTotal | currency:"$"}}</td>
+          <td><a href="presupuestoDetalle/{{budget._budgetId}}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></a></td>
+        </tr>
+      </table>
+    </div>
+    <div class="panel-body" ng-show="clientDetailShowing == 'agregarPago'">
+      <table class="table">
+        <tr>
+          <td class="input-group">
+            <span class="input-group-addon" id="paymentDate">Fecha:</span>
+            <input type="date" class="form-control" aria-describedby="paymentDate" ng-model="pago.paymentDate">
+          </td>
+        </tr>
+        <tr>
+          <td class="input-group">
+            <span class="input-group-addon" id="paymentMethod">Método:</span>
+            <input type="text" class="form-control" aria-describedby="paymentMethod" ng-model="pago.paymentMethod">
+          </td>
+        </tr>
+        <tr>
+          <td class="input-group">
+            <span class="input-group-addon" id="paymentMount">Monto: $</span>
+            <input type="number" step="any" min="0" class="form-control" aria-describedby="paymentMount" ng-model="pago.paymentMount">
+          </td>
+        </tr>
+        <tr>
+          <td class="input-group">
+            <span class="input-group-addon" id="paymentNotes">Notas:</span>
+            <input type="text" class="form-control" aria-describedby="paymentNotes" ng-model="pago.paymentNotes">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button type="button" class="btn btn-primary" ng-click="registrarPago()">Registrar pago</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
