@@ -1,0 +1,17 @@
+<div class="jumbotron">
+
+  <div ng-show="dialog.icon" class="glyphicon glyphicon-{{dialog.icon}}" style="font-size: 3em"></div>
+
+  <h2 ng-show="dialog.title" ng-bind-html="dialog.title"></h2>
+
+  <p ng-show="dialog.text" ng-bind-html="dialog.text"></p>
+
+  <button type="button" class="btn btn-success" ng-click="confirm(true)">
+    <span class="glyphicon glyphicon-ok"></span> Si
+  </button>
+
+  <button type="button" class="btn btn-danger" ng-click="closeThisDialog(false)">
+    <span class="glyphicon glyphicon-remove"></span> No
+  </button>
+
+</div>

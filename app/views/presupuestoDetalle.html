@@ -1,0 +1,60 @@
+<div class="">
+
+  <h1 ng-show={{presupuestoDetalle.titleIsVisible}}>
+    {{presupuestoDetalle.sectionTitle}}
+    <small class="hidden-print"><a href="presupuestos" class="btn btn-primary">Todos</a></small>
+  </h1>
+
+  <table class="table">
+    <tr>
+      <td colspan="2">Fecha: {{presupuesto.budgetDate | date:"dd/MM/yyyy"}}</td>
+      <td colspan="3">Cliente: <a href="clienteDetalle/{{presupuesto.client._clientId}}">{{presupuesto.client.clientName}}</a></td>
+    </tr>
+    <tr class="hidden-print">
+      <td colspan="2">Factura: #{{presupuesto.billNumber}}</td>
+      <td colspan="2">Presupuesto: #{{presupuesto._budgetId}}</td>
+      <td>
+        <a ng-href="#" ng-click="sendEmail()" class="btn btn-default">Enviar por e-mail</a>
+      </td>
+    </tr>
+    <tr ng-hide="presupuesto.client.clientBalance == ''">
+      <td colspan="6" ng-class="{danger: presupuesto.client.clientBalance < 0, success: presupuesto.client.clientBalance >= 0}">
+        Saldo actual de cuenta al <span>{{getToday() | date:'dd/MM/yyyy'}}</span> es de <span>{{presupuesto.client.clientBalance | currency:'$'}}</span>
+      </td>
+    </tr>
+    <tr>
+      <td>Cant.</td>
+      <td>Cod. Item</td>
+      <td>Descripción Item</td>
+      <td>Precio Unitario</td>
+      <td>Precio Total</td>
+    </tr>
+    <tr ng-repeat="item in presupuesto.budgetItems track by item._id">
+      <td>{{item.itemCount}}</td>
+      <td>{{item.itemCode}}</td>
+      <td>{{item.itemDescription}}</td>
+      <td>{{item.unitPrice}}</td>
+      <td>{{item.totalPrice}}</td>
+    </tr>
+    <tr>
+      <td rowspan="4" colspan="3">
+        Notas: {{presupuesto.budgetNotes}}
+      </td>
+      <td>Subtotal:</td>
+      <td>{{presupuesto.budgetSubtotal}}</td>
+    </tr>
+    <tr>
+      <td>Descuento:</td>
+      <td>{{presupuesto.budgetDiscount}}</td>
+    </tr>
+    <tr>
+      <td>IVA:</td>
+      <td>{{presupuesto.budgetIva}}</td>
+    </tr>
+    <tr>
+      <td>Total:</td>
+      <td>{{presupuesto.budgetTotal}}</td>
+    </tr>
+  </table>
+
+</div>

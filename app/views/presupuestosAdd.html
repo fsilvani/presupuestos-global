@@ -1,0 +1,132 @@
+<div class="">
+
+  <h1 ng-show={{presupuestosAdd.titleIsVisible}}>
+    {{presupuestosAdd.sectionTitle}}
+  </h1>
+
+  <form method="post" ng-submit="presupuestosAdd.guardarPresupuesto()">
+    <table class="table table-bordered">
+      <tr>
+        <td colspan="6">
+          <div class="input-group">
+
+            <label for="budgetDate" class="input-group-addon" id="budgetDate">Fecha:</label>
+            <input id="budgetDate" type="date" ng-model="budget.budgetDate" aria-describedby="budgetDate"
+            name="budgetDate" class="form-control" placeholder="DD/MM/AAAA"
+            value="budget.budgetDate | date:'dd/MM/yyyy'" />
+
+            <label for="billNumber" class="input-group-addon" id="billNumber">Factura:</label>
+            <input id="billNumber" type="text" ng-model="budget.billNumber" aria-describedby="billNumber"
+            name="billNumber" class="form-control" placeholder="XXXX" />
+
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <div class="input-group input-group-lg">
+            <label for="client" class="input-group-addon" id="client">Cliente:</label>
+            <select id="client" ng-model="budget.client"
+              name="client" class="form-control" aria-describedby="client"
+              ng-options="cliente.clientName for cliente in clientes track by cliente._id"
+              ng-change="presupuestosAdd.updateCurrentBalance(budget.client)">
+              <option default hidden value="">Selecciona un cliente</option>
+            </select>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td> </td>
+        <td> Cantidad </td>
+        <td> Código </td>
+        <td> Descripción </td>
+        <td> Precio Unitario </td>
+        <td> Total </td>
+      </tr>
+      <tr ng-hide="currentBalance == ''">
+        <td colspan="6" ng-class="{danger: currentBalance < 0, success: currentBalance >= 0}">
+          Saldo actual de cuenta al <span>{{getToday() | date:'dd/MM/yyyy'}}</span> es de <span>{{currentBalance | currency:'$'}}</span>
+        </td>
+      </tr>
+      <tr ng-repeat="item in budget.budgetItems track by $index">
+        <td> <button class="btn glyphicon glyphicon-remove" ng-click="presupuestosAdd.eliminarItem($index)"></button></td>
+        <td>
+          <div class="input-group">
+            <span class="input-group-addon">x</span>
+            <input type="number"
+            ng-model="item.itemCount" min="1"
+            ng-change="presupuestosAdd.calcBudget()"
+            class="form-control">
+          </div>
+        </td>
+        <td>
+          <input type="text"
+          ng-model="item.itemCode"
+          class="form-control">
+        </td>
+        <td> <input type="text"
+          ng-model="item.itemDescription"
+          class="form-control"> </td>
+        <td>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="number" step="any" min="0"
+            ng-model="item.unitPrice"
+            ng-change="presupuestosAdd.calcBudget()"
+            class="form-control">
+          </div>
+        </td>
+        <td ng-bind-html="item.totalPrice | currency:'$'"></td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <button type="button" class="btn" ng-click="presupuestosAdd.agregarItem()">Agregar Item</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <table class="table">
+            <tr>
+              <td rowspan="4">
+                Notas:
+                <textarea ng-model="budget.budgetNotes"
+                  class="form-control"
+                  rows="3"></textarea>
+              </td>
+              <td>Subtotal</td>
+              <td><span>{{budget.budgetSubtotal | currency:"$":2}}</span></td>
+            </tr>
+            <tr>
+              <td>Promoción</td>
+              <td>
+                <div class="input-group">
+                  <input type="number" min="0" class="form-control"
+                  ng-model="budget.budgetDiscount" ng-change="presupuestosAdd.calcBudget()">
+                  <span class="input-group-addon">%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>IVA</td>
+              <td>
+                <div class="input-group">
+                  <input type="number" min="0" class="form-control"
+                  ng-model="budget.budgetIva" ng-change="presupuestosAdd.calcBudget()">
+                  <span class="input-group-addon">%</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td><span>{{budget.budgetTotal | currency:"$":2}}</span></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6"> <button type="submit" class="btn btn-primary"> Grabar </button></td>
+      </tr>
+    </table>
+  </form>
+
+</div>

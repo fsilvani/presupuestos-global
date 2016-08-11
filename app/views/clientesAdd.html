@@ -1,0 +1,61 @@
+<div class="">
+
+  <h1 ng-show={{clientesAdd.titleIsVisible}}>
+    {{clientesAdd.sectionTitle}}
+  </h1>
+
+  <form method="post" ng-submit="clientesAdd.guardarCliente()">
+    <table class="table">
+      <tr>
+        <td>
+          <div class="input-group input-group-lg">
+            <label for="clientName" class="input-group-addon">Nombre Cliente:</label>
+            <input id="clientName" type="text" ng-model="cliente.clientName"
+            name="clientName" class="form-control" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="input-group">
+            <label for="clientAdress" class="input-group-addon">Dirección:</label>
+            <input id="clientAdress" type="text" ng-model="cliente.clientAdress"
+            name="clientAdress" class="form-control" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="input-group">
+            <label for="clientTelephone" class="input-group-addon">Teléfono:</label>
+            <input id="clientTelephone" type="tel" ng-model="cliente.clientTelephone"
+            name="clientTelephone" class="form-control" placeholder="(02392) 4X-XXXX" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="input-group">
+            <label for="clientBalance" class="input-group-addon">Deuda Actual:</label>
+            <input id="clientBalance" type="number" ng-model="cliente.clientBalance"
+            name="clientBalance" class="form-control" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="input-group">
+            <label for="clientNotes" class="input-group-addon">Notas:</label>
+            <textarea name="clientNotes" id="clientNotes" rows="8"
+            ng-model="cliente.clientNotes"
+            class="form-control"></textarea>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td> <button type="submit" class="btn btn-primary"> Grabar </button></td>
+      </tr>
+    </table>
+  </form>
+
+</div>
