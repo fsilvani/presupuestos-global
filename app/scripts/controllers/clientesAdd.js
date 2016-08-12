@@ -9,9 +9,9 @@ angular.module('presupuestosAngularApp')
       'clientName': '',
       'clientPayments': [],
       'clientBalance': 0,
-      'clientAdress': "",
-      'clientTelephone': "",
-      'clientNotes': ""
+      'clientAdress': '',
+      'clientTelephone': '',
+      'clientNotes': ''
     };
 
     this.getNewClient = function() {
@@ -23,14 +23,14 @@ angular.module('presupuestosAngularApp')
         'clientTelephone': $scope.cliente.clientTelephone,
         'clientNotes': $scope.cliente.clientNotes
       };
-    }
+    };
 
     this.validarCampos = function() {
       if ($scope.cliente.clientName.length < 3) {
         console.log('Nombre inválido');
         return false;
       }
-      if (Number($scope.cliente.clientBalance) == NaN) {
+      if (isNaN(Number($scope.cliente.clientBalance))) {
         console.log('Deuda inválida');
         return false;
       }
@@ -43,21 +43,21 @@ angular.module('presupuestosAngularApp')
         return false;
       }
       return true;
-    }
+    };
 
     this.guardarCliente = function(){
-      var clientToPost = this.getNewClient()
+      var clientToPost = this.getNewClient();
       if (this.validarCampos()) {
         $http.post('http://localhost:8080/api/clientes/post', clientToPost)
         .then(
           function(data) {
             $scope.presupuestosList = data;
             console.log(data);
-            $location.url("/clientes");
+            $location.url('/clientes');
         }, function(error) {
             console.log('Error: ', error);
         });
       }
-    }
+    };
 
   });

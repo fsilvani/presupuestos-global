@@ -72,5 +72,5 @@ angular
 
     $scope.changeWebSection = function(webSection){
       $scope.webSection = webSection;
-    }
+    };
   });

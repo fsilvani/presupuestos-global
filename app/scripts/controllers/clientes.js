@@ -13,7 +13,7 @@ angular.module('presupuestosAngularApp')
         .error(function(data) {
             console.log('Error: ', data);
       });
-    }
+    };
     var me = this;
     $timeout(function(){
       me.getAllClients();
@@ -29,14 +29,14 @@ angular.module('presupuestosAngularApp')
         template: 'views/mensaje.html',
         className: 'ngdialog-theme-default',
         scope: $scope
-      }).then( function(data){
+      }).then( function(){
         $http.delete('http://localhost:8080/api/clientes/delete/' + clientId)
-        .success(function(data) {
+        .success(function() {
           me.getAllClients();
         })
         .error(function(data) {
           console.log('Error: ', data);
         });
       });
-    }
+    };
   });
