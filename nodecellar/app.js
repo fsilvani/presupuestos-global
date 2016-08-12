@@ -19,5 +19,5 @@ app.all('/*', function(req, res, next) {
 var routes = require('./routes');
 routes(app);
 
-app.listen(8080);
-console.log('Listening on port 8080...');
+app.listen(process.env.PORT);
+console.log('Listening on port ' + process.env.PORT + '...');
