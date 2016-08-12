@@ -16,7 +16,7 @@ angular.module('presupuestosAngularApp')
         .error(function(data) {
             console.log('Error: ', data);
       });
-    }
+    };
     this.getClients();
 
     $scope.presupuestosList = [];
@@ -28,7 +28,7 @@ angular.module('presupuestosAngularApp')
         .error(function(data) {
             console.log('Error: ', data);
       });
-    }
+    };
 
     this.eliminarPresupuesto = function(budgetId){
 
@@ -41,9 +41,9 @@ angular.module('presupuestosAngularApp')
         template: 'views/mensaje.html',
         className: 'ngdialog-theme-default',
         scope: $scope
-      }).then( function(data){
+      }).then( function(){
         $http.delete('http://localhost:8080/api/presupuestos/delete/' + budgetId)
-        .success(function(data) {
+        .success(function() {
           me.getAllBudgets();
         })
         .error(function(data) {
@@ -51,5 +51,5 @@ angular.module('presupuestosAngularApp')
         });
       });
 
-    }
+    };
   });

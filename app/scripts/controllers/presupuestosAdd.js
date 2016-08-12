@@ -9,7 +9,7 @@ angular.module('presupuestosAngularApp')
     $scope.currentBalance = 0;
     this.updateCurrentBalance = function(client){
       $scope.currentBalance = client.clientBalance;
-    }
+    };
 
     $scope.clientes = [];
     $http.get('http://localhost:8080/api/clientes/get')
@@ -23,18 +23,18 @@ angular.module('presupuestosAngularApp')
 
     this.cargarDatos = function(){
       $scope.budgetItem = {
-        'itemCount': "",
-        'itemCode': "",
-        'itemDescription': "",
-        'unitPrice': "",
-        'totalPrice': "",
+        'itemCount': '',
+        'itemCode': '',
+        'itemDescription': '',
+        'unitPrice': '',
+        'totalPrice': '',
       };
 
       $scope.budget = {
-        'billNumber': "",
+        'billNumber': '',
         'client': '',
         'budgetDate': new Date(),
-        'budgetNotes': "",
+        'budgetNotes': '',
         'budgetItems': [],
         'budgetSubtotal': 0,
         'budgetDiscount': 0,
@@ -45,33 +45,33 @@ angular.module('presupuestosAngularApp')
         // agrega el primer item vacío
         me.agregarItem();
       }, 0);
-    }
+    };
 
     this.agregarItem  = function(){
       $scope.budget.budgetItems.push(angular.copy($scope.budgetItem));
       this.calcBudget();
-    }
+    };
 
     this.eliminarItem  = function(itemIndex){
       if($scope.budget.budgetItems.length > 1){
         $scope.budget.budgetItems.splice(itemIndex, 1);
         this.calcBudget();
       }
-    }
+    };
 
     this.getNewPresupuesto = function() {
       return {
-        "billNumber": $scope.budget.billNumber,
-        "client": $scope.budget.client._id,
-        "budgetDate": $scope.budget.budgetDate,
-        "budgetNotes": $scope.budget.budgetNotes,
-        "budgetItems": $scope.budget.budgetItems,
-        "budgetSubtotal": $scope.budget.budgetSubtotal,
-        "budgetDiscount": $scope.budget.budgetDiscount,
-        "budgetIva": $scope.budget.budgetIva,
-        "budgetTotal": $scope.budget.budgetTotal
+        'billNumber': $scope.budget.billNumber,
+        'client': $scope.budget.client._id,
+        'budgetDate': $scope.budget.budgetDate,
+        'budgetNotes': $scope.budget.budgetNotes,
+        'budgetItems': $scope.budget.budgetItems,
+        'budgetSubtotal': $scope.budget.budgetSubtotal,
+        'budgetDiscount': $scope.budget.budgetDiscount,
+        'budgetIva': $scope.budget.budgetIva,
+        'budgetTotal': $scope.budget.budgetTotal
       };
-    }
+    };
 
     this.calcBudget = function(){
       $scope.budget.budgetSubtotal = 0;
@@ -81,22 +81,22 @@ angular.module('presupuestosAngularApp')
         $scope.budget.budgetSubtotal += $scope.budget.budgetItems[i].totalPrice;
       }
       $scope.budget.budgetTotal = $scope.budget.budgetSubtotal - ($scope.budget.budgetSubtotal * $scope.budget.budgetDiscount / 100) + ($scope.budget.budgetSubtotal * $scope.budget.budgetIva / 100);
-    }
+    };
 
     this.validarCampos = function() {
       if ($scope.budget.client.length < 0) {
         console.log('Cliente inválido');
         return false;
       }
-      if ($scope.budget.budgetDate == '') {
+      if ($scope.budget.budgetDate === '') {
         console.log('Fecha inválido');
         return false;
       }
-      if (Number($scope.budget.budgetDiscount) == NaN) {
+      if (isNaN(Number($scope.budget.budgetDiscount))) {
         console.log('Descuento inválido');
         return false;
       }
-      if (Number($scope.budget.budgetIva) == NaN) {
+      if (isNaN(Number($scope.budget.budgetIva))) {
         console.log('IVA inválida');
         return false;
       }
@@ -114,13 +114,13 @@ angular.module('presupuestosAngularApp')
           console.log('Descripción inválida');
           return false;
         }
-        if (Number($scope.budget.budgetItems[i].unitPrice) == NaN) {
+        if (isNaN(Number($scope.budget.budgetItems[i].unitPrice))) {
           console.log('Precio inválido');
           return false;
         }
       }
       return true;
-    }
+    };
 
     this.guardarPresupuesto = function(){
       var presupuestoToPost = this.getNewPresupuesto();
@@ -129,13 +129,15 @@ angular.module('presupuestosAngularApp')
         .then(
           function(data) {
             $scope.presupuestosList = data;
-            $location.url("/presupuestos");
+            $location.url('/presupuestos');
         }, function(error) {
             console.log('Error: ', error);
         });
       }
-    }
+    };
 
-    $scope.getToday = () => (new Date());
+    $scope.getToday = function(){
+      return new Date();
+    };
 
   });

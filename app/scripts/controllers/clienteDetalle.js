@@ -9,15 +9,15 @@ angular.module('presupuestosAngularApp')
 
     $scope.changeClientDetail = function(section){
       $scope.clientDetailShowing = section;
-    }
+    };
 
     $scope.pago = {
-      "paymentMount": 0,
-      "client": '',
-      "paymentDate": new Date(),
-      "paymentMethod": '',
-      "paymentNotes": ''
-    }
+      'paymentMount': 0,
+      'client': '',
+      'paymentDate': new Date(),
+      'paymentMethod': '',
+      'paymentNotes': ''
+    };
 
     // Cuando se cargue la página, pide del API todos los TODOs
     this.obtenerClientes = function(){
@@ -28,7 +28,7 @@ angular.module('presupuestosAngularApp')
       .error(function(data) {
         console.log('Error: ', data);
       });
-    }
+    };
     this.obtenerClientes();
 
     this.validarPago = function(){
@@ -45,7 +45,7 @@ angular.module('presupuestosAngularApp')
         return false;
       }
       return true;
-    }
+    };
 
     this.validarCliente = function(){
       if ($scope.cliente.clientName.length < 3) {
@@ -61,7 +61,7 @@ angular.module('presupuestosAngularApp')
         return false;
       }
       return true;
-    }
+    };
 
     $scope.actualizarCliente = function(){
       if(me.validarCliente()){
@@ -71,9 +71,9 @@ angular.module('presupuestosAngularApp')
           clientAdress: $scope.cliente.clientAdress,
           clientTelephone: $scope.cliente.clientTelephone,
           clientNotes: $scope.cliente.clientNotes
-        }
+        };
         $http.put('http://localhost:8080/api/clientes/update', clientToUpdate)
-          .success(function(data) {
+          .success(function() {
             me.obtenerClientes();
             $scope.clientDetailShowing = 'pagos';
           })
@@ -81,13 +81,13 @@ angular.module('presupuestosAngularApp')
             console.log('Error: ', data);
         });
       }
-    }
+    };
 
     $scope.registrarPago = function(){
       if(me.validarPago()){
         $scope.pago.client = $scope.cliente._id;
         $http.post('http://localhost:8080/api/pagos/post', $scope.pago)
-          .success(function(data) {
+          .success(function() {
             me.obtenerClientes();
             $scope.clientDetailShowing = 'pagos';
           })
@@ -95,5 +95,5 @@ angular.module('presupuestosAngularApp')
             console.log('Error: ', data);
         });
       }
-    }
+    };
   });

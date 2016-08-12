@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('presupuestosAngularApp')
-  .controller('PresupuestoDetalleCtrl', function ($scope, $http, $routeParams, ngDialog) {
+  .controller('PresupuestoDetalleCtrl', function ($scope, $http, $routeParams) {
     this.sectionTitle = 'Detalle de Presupuesto Id# ' + $routeParams.budgetId;
     this.titleIsVisible = true;
 
@@ -14,10 +14,12 @@ angular.module('presupuestosAngularApp')
         console.log('Error: ', data);
     });
 
-    $scope.getToday = () => (new Date());
+    $scope.getToday = function(){
+      return new Date();
+    };
 
     $scope.sendEmail = function(){
       console.log('prueba');
-    }
+    };
 
   });
