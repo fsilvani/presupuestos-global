@@ -1,7 +1,5 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-// var presupuestos = require('./routes/presupuestos');
-// var clientes = require('./nodecellar/routes/clientes');
 var app = express();
 
 app.use(express.bodyParser());
