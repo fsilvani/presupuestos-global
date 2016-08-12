@@ -33,10 +33,6 @@ var presupuestos = dbConnection.Connection.model('presupuestos', presupuestosSch
 
 dbConnection.Connection.connection;
 
-presupuestos.update({}, {$set: {'budgetStatus': 'pendiente'}}, function(err, result){
-  console.log('listo el pollo!', result);
-});
-
 module.exports.findAllBudgets = function(callback) {
   console.log('Listing all budgets');
   presupuestos.find(null, {
