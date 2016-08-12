@@ -45,7 +45,7 @@
     "angular-ui-bootstrap": "^2.0.0"
   },
   "engines": {
-    "node": "4.1.1"
+    "node": "0.10.x"
   },
   "scripts": {
     "test": "karma start test\\karma.conf.js"
